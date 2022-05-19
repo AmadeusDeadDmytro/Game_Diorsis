@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
+    [SerializeField] private float playerRunSpeed = 5.0f;
+    
     private Rigidbody2D _playerRigidbody2D;
 
     public void Movement(Player player)
@@ -11,7 +13,8 @@ public class InputManager : MonoBehaviour
         float horizontalInputValue = Input.GetAxisRaw("Horizontal");
         if (horizontalInputValue != 0)
         {
-            
+            float moveValue = horizontalInputValue * playerRunSpeed * Time.deltaTime;
+            player.transform.Translate(Vector3.right * moveValue);
         }
     }
 
