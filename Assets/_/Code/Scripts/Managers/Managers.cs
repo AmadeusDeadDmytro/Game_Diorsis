@@ -7,10 +7,9 @@ public class Managers : MonoBehaviour
 
     [Header("Objects")] 
     [SerializeField] private Player player;
-    [SerializeField] private Animator playerAnimator;
 
     private void Update()
     {
-        inputManager.Movement(player, playerAnimator);
+        inputManager.CheckPress(player);
     }
 }

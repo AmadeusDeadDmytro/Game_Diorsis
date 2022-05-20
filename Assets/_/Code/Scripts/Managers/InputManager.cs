@@ -1,24 +1,41 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class InputManager : MonoBehaviour
 {
-    [SerializeField] private float playerRunSpeed = 5.0f;
     private static readonly int IsRunning = Animator.StringToHash("isRunning");
 
-    public void Movement(Player player, Animator animator)
+    private bool _isBlocked = false;
+    private Animator _playerAnimator;
+
+    public void CheckPress(Player player)
     {
+        if (!_playerAnimator)
+        {
+            _playerAnimator = player.transform.GetChild(0).GetComponent<Animator>();
+        }
+        
+        if (_isBlocked) return;
+
         float horizontalInputValue = Input.GetAxisRaw("Horizontal");
         if (horizontalInputValue != 0)
         {
-            // Flip player
-            player.IsFlip(horizontalInputValue < 0);
-            
-            // Move Character
-            float moveValue = horizontalInputValue * playerRunSpeed * Time.deltaTime;
-            player.transform.Translate(Vector3.right * moveValue);
+            player.Movement(horizontalInputValue);
         }
         
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _isBlocked = true;
+            player.Flip();
+        }
+
         // Change Animation
-        animator.SetBool(IsRunning, horizontalInputValue != 0);
+        _playerAnimator.SetBool(IsRunning, horizontalInputValue != 0);
+    }
+
+    public void UnblockInput()
+    {
+        _isBlocked = false;
     }
 }
