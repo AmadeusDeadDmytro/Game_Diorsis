@@ -1,12 +1,20 @@
 ﻿using System;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Config")]
     [SerializeField] private float playerRunSpeed = 5.0f;
     [SerializeField] private float playerFlipSpeed = 7.0f;
+    
+    [Header("References")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
+    [SerializeField] private AnimatorController defaultController;
+
+    [Header("Settings")] [SerializeField] 
+    private WeaponType currentWeapon = WeaponType.None;
     
     private static readonly int IsFlipping = Animator.StringToHash("isFlipping");
     private Rigidbody2D _rigidbody;
