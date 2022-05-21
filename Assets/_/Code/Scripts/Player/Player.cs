@@ -49,6 +49,19 @@ public class Player : MonoBehaviour
         animator.SetBool(IsFlipping, false);
     }
 
+    public void SetCurrentWeapon(WeaponBaseConfig weapon)
+    {
+        if (!weapon)
+        {
+            currentWeapon = WeaponType.None;
+            animator.runtimeAnimatorController = defaultController;
+            return;
+        }
+        
+        currentWeapon = weapon.type;
+        animator.runtimeAnimatorController = weapon.animationController;
+    }
+
     private void IsFlip(bool value)
     {
         spriteRenderer.flipX = value;
