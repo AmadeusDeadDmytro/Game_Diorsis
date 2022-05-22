@@ -10,13 +10,15 @@ public class GameEvents: MonoBehaviour
         current = this;
     }
 
-    public event Action onWeaponChange;
+    public delegate void WeaponChangeAction(WeaponBaseConfig weapon);
 
-    public void WeaponChangeTrigger()
+    public event WeaponChangeAction onWeaponChange;
+
+    public void WeaponChangeTrigger(WeaponBaseConfig weapon)
     {
         if (onWeaponChange != null)
         {
-            onWeaponChange();
+            onWeaponChange(weapon);
         }
     }
 }

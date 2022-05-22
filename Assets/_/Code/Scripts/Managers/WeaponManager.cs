@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
     [SerializeField] private List<WeaponBaseConfig> allWeapons = new List<WeaponBaseConfig>();
 
     private void Awake()
@@ -18,18 +17,17 @@ public class WeaponManager : MonoBehaviour
     
     private void Reset()
     {
-        player = GameObject.FindWithTag("Player").GetComponent<Player>();
         allWeapons = Resources.LoadAll<WeaponBaseConfig>("Weapon").ToList();
     }
 
-    private void Start()
+    public List<WeaponBaseConfig> GetAllWeapons()
     {
-        GameEvents.current.onWeaponChange += OnWeaponChange;
+        return allWeapons;
     }
 
-
-    private void OnWeaponChange()
+    public void ChangeWeaponByName(string weaponName)
     {
-        Debug.Log("event");
+        GameEvents.current.WeaponChangeTrigger(allWeapons.SingleOrDefault(w => w.name == weaponName));
     }
+    
 }

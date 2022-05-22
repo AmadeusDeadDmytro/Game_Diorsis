@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
     [Header("References")]
     [SerializeField] private SpriteRenderer spriteRenderer;
     [SerializeField] private Animator animator;
-    [SerializeField] private AnimatorController defaultController;
 
     [Header("Settings")] [SerializeField] 
     private WeaponType currentWeapon = WeaponType.None;
@@ -22,6 +21,11 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        GameEvents.current.onWeaponChange += SetCurrentWeapon;
     }
 
     public void Movement(float horizontalValue)
@@ -49,15 +53,8 @@ public class Player : MonoBehaviour
         animator.SetBool(IsFlipping, false);
     }
 
-    public void SetCurrentWeapon(WeaponBaseConfig weapon)
+    private void SetCurrentWeapon(WeaponBaseConfig weapon)
     {
-        if (!weapon)
-        {
-            currentWeapon = WeaponType.None;
-            animator.runtimeAnimatorController = defaultController;
-            return;
-        }
-        
         currentWeapon = weapon.type;
         animator.runtimeAnimatorController = weapon.animationController;
     }
