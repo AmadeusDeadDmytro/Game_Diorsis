@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
 
@@ -14,6 +16,7 @@ public class Player : MonoBehaviour
 
     [Header("Settings")] 
     [SerializeField] private WeaponType currentWeapon = WeaponType.None;
+    [SerializeField] private float airDivider = 2.0f;
 
     [Header("Rays")] 
     [SerializeField] private GameObject rayPositionLeft;
@@ -42,8 +45,11 @@ public class Player : MonoBehaviour
         // Check if wall in front of player
         if (IsWallInFront(isLeftDirection)) return;
 
+        // Decrease horizontal speed if player in the air
+        float speed = _rigidbody.velocity.y < 0 ? playerRunSpeed / airDivider : playerRunSpeed;
+
         // Move Character
-        float moveValue = horizontalValue * playerRunSpeed * Time.deltaTime;
+        float moveValue = horizontalValue * speed * Time.deltaTime;
         transform.Translate(Vector3.right * moveValue);
     }
 
