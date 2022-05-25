@@ -7,4 +7,5 @@ public class WeaponBaseConfig: ScriptableObject
     public string weaponName;
     public WeaponType type;
     public AnimatorController animationController;
+    public int comboStep = 0;
 }

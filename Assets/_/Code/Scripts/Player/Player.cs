@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [SerializeField] private Animator animator;
 
     [Header("Settings")] 
-    [SerializeField] private WeaponType currentWeapon = WeaponType.None;
+    [SerializeField] private WeaponType currentWeapon = WeaponType.Chain;
     [SerializeField] private float airDivider = 2.0f;
 
     [Header("Rays")] 
